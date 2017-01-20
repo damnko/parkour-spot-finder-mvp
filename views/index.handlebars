@@ -1,0 +1,31 @@
+<div class="hp-wrap">
+  <!-- Simple video example -->
+  <div class="video-wrap">
+    <video src="/video/hp.mp4" autoplay muted loop poster="posterimage.jpg">
+      Sorry, your browser doesn't support embedded videos.
+    </video>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 content">
+          <h1>Find parkour spots near you</h1>
+          <h2>Filter by <span class="teatro"></span></h2>
+          <a href="/spots" class="btn btn-primary btn-raised">Find spots</a>
+        </div>
+      </div>
+    </div> {{!-- container --}}
+  </div> {{!-- video-wrap --}}
+  
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      flash: {{flash}}
+    </div>
+  </div>
+</div>
+
+{{#section 'scripts'}}
+  <script src="/build/js/index.js"></script>
+{{/section}}

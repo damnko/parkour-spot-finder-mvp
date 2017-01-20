@@ -1,0 +1,15 @@
+{
+	"db":{
+		"url": "mongodb://localhost:27017/pk",
+    "usersCollection": "users",
+    "tricksCollection": "tricks",
+    "spotsCollection" : "spots"
+	},
+  "dirs":{
+    "fullres": "images/uploads/fr/",
+    "thumb": "images/uploads/thumb/"
+  },
+  "api":{
+    "maps": "AIzaSyAjC3U-CbKYm_4sYV90XqJ_Upe8ID9jlxk"
+  }
+}

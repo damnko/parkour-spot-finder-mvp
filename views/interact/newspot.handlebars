@@ -1,0 +1,81 @@
+<div class="container">
+  <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+  <div id="map"></div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="well">
+          <form id="newspot" method="post" action="/interact/action/suggestSpot">
+            <fieldset>
+              <legend>Legend</legend>
+              <div class="form-group">
+                  lat: <input type="text" class="mapAddress form-control" id="lat" name="lat">
+                  lng: <input type="text" class="mapAddress form-control" id="lng" name="lng">
+                  route: <input type="text" class="mapAddress form-control" id="route" name="route">
+                  locality: <input type="text" class="mapAddress form-control" id="locality">
+                  administrative_area_level_2: <input type="text" class="mapAddress form-control" id="administrative_area_level_2">
+                  administrative_area_level_1: <input type="text" class="mapAddress form-control" id="administrative_area_level_1">
+                  country: <input type="text" class="mapAddress form-control" id="country">
+                  postal_code: <input type="text" class="mapAddress form-control" id="postal_code">
+                  formatted_address: <input type="text" class="mapAddress form-control" id="formatted_address" name="formatted_address">
+              </div>
+              <div class="form-group label-floating">
+                <label for="name" class="control-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name"><br/>
+                // verificare in futuro se questo spot esiste gia' e eventualmente nel caso non esistesse, se e' troppo vicino ad altri spot (e quindi potrebbe essere lo stesso) - quest'ultima cosa forse si puo' fare considerando il puntatore nella mappa
+              </div>
+              <div class="form-group">
+                <label for="description" class="control-label">Description</label>
+                <textarea class="form-control" rows="3" name="description" id="description"></textarea>
+                <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+              </div>
+              <div class="form-group">
+                <label for="img" class="control-label">Pictures</label>
+                <div id="imgDrop" class="dropzone"></div>
+                <input type="text" id="imgText" name="imgText">
+              </div>
+              <div class="form-group">
+                <label for="tricks" class="control-label">Tricks</label>
+                <input type="text" id="tricks" name="tricks" data-role="tagsinput"><br/>
+                // in futuro e' bene aggiungere la possibilita' di suggerire nuovi tricks
+                {{!-- <select multiple id="tricks" name="tricks" data-role="tagsinput"></select> --}}
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-raised btn-block btn-primary">Add spot</button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        {{!-- <form action="/interact/newspot/upload"
+                      class="dropzone"
+                      id="imgDrop"></form>
+        <a href="/interact/newspot/diocan">boh</a>
+        <form action="/interact/newspot/diocan" method="post" enctype="multipart/form-data">
+          <input type="file" id="file" name="file">
+          <button type="submit" class="btn btn-raised btn-block btn-primary">Add spot</button>
+        </form> --}}
+        
+      </div>
+  </div>
+</div>
+
+<script id="mapInfowindow-template" type="text/x-handlebars-template">
+  <div class="mapInfowindow">
+    \{{#if img}}
+      <img src="/images/uploads/thumb/\{{img}}" alt="">
+    \{{/if}}
+    <h3>\{{name}}</h3>  
+    <p>\{{address}}</p>
+    <a href="\{{url}}" target="_blank">Spot details</a>
+  </div>
+</script>
+
+{{#section 'scripts'}}
+  {{!-- Maps API --}}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjC3U-CbKYm_4sYV90XqJ_Upe8ID9jlxk&libraries=places"></script>
+  <script src="/src/vendor/typeahead.bundle.js"></script>
+  <script src="/build/js/interact.js"></script>
+{{/section}}
+
+{{#section 'css'}}
+  <link href="/build/css/interact.css" rel="stylesheet">
+{{/section}}

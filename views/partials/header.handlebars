@@ -1,0 +1,137 @@
+<div class="navbar-wrap">
+  <div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">PK Spot Finder</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="/spots/">Search spots</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {{#if user}}
+              <li><a href="/interact/new-spot/">Suggest new spot</a></li>
+              <li><a href="/logout">Logout</a></li>
+            {{else}}
+              <li><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
+              <li><a href="#" data-toggle="modal" data-target="#registerModal">Register</a></li>
+            {{/if}}
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    {{!-- Register modal start --}}
+    <div class="modal" role="dialog" id="registerModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">Register</h4>
+          </div>
+          <div class="modal-body">
+            <div class="register-wrap clearfix">
+              <div class="col-md-12">
+                <strong>By registering you can:</strong>
+                <ul class="fa-ul">
+                  <li><i class="fa-li fa fa-check" aria-hidden="true"></i><strong>Suggest</strong> new spots</li>
+                  <li><i class="fa-li fa fa-check" aria-hidden="true"></i><strong>Vote</strong> spots</li>
+                  <li><i class="fa-li fa fa-check" aria-hidden="true"></i>Push your training <strong>schedule</strong>/presence</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-12">
+            <form class="form-horizontal" id="registerForm" method="post" action="/register">
+              <div class="alert alert-dismissible alert-danger hidden">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>There were errors processing the form</strong>
+              </div>
+              <fieldset>
+                
+                  <div class="form-group label-floating">
+                    <label class="control-label" for="registeremail">Email</label>
+                    <input type="text" class="form-control" id="registeremail" name="registeremail">
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label" for="registerusername">Nickname</label>
+                    <input type="text" class="form-control" id="registerusername" name="registerusername">
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label" for="registerpassword">Password</label>
+                    <input type="password" class="form-control" id="registerpassword" name="registerpassword">
+                  </div>
+                  <div class="form-group">
+                    <div class="togglebutton">
+                      <label>
+                        <input type="checkbox" id="registerprivacy" name="registerprivacy" value="agree"> I agree to the privacy policy
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <button type="submit" class="btn btn-raised btn-block btn-primary">Register</button>
+                    </div>
+                  </div>
+                
+              </fieldset>
+            </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{!-- Register modal end --}}
+    {{!-- Login modal start --}}
+    <div class="modal" role="dialog" id="loginModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">Login</h4>
+          </div>
+          <div class="modal-body">
+            <div class="col-md-12">
+              <form class="form-horizontal" id="loginForm" method="post" action="/login">
+                <div class="alert alert-dismissible alert-danger hidden">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                  <strong>There were errors processing the form</strong>
+                </div>
+                <fieldset>
+                  <div class="form-group label-floating">
+                    <label class="control-label" for="usernamelogin">Username</label>
+                    <input type="text" class="form-control" id="usernamelogin" name="usernamelogin">
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label" for="passwordlogin">Password</label>
+                    <input type="password" class="form-control" id="passwordlogin" name="passwordlogin">
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <button type="submit" class="btn btn-block btn-raised btn-primary">Login</button>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div> {{!-- modal-body --}}
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{!-- Login modal end --}}
+  </div> {{!-- container --}}
+</div> {{!-- navbar-wrap --}}

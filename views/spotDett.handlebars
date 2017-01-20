@@ -1,0 +1,187 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <ul id="spotImg">
+        {{#each imgs}}
+        <li {{#if this.hidden}}class="hidden"{{/if}}>
+          <img src="/images/uploads/fr/{{this.name}}" data-size="{{this.size}}" class="img-responsive" alt="">
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <input type="hidden" id="spotId" value="{{_id}}">
+      <h1>{{name}}</h1>
+      <h3>Description:</h3>
+      <p>{{description}}</p>
+      <h3>Tricks</h3>
+      <p>
+        {{#each tricks}}
+          <span class="label label-default">{{this}}</span>
+        {{/each}}
+      </p>
+      <h3>Training timetable for <span id="activeDate"></span></h3>
+      <ul class="pager" id="training-pager">
+        <li class="previous disabled"><a href="javascript:void(0)">← Older</a></li>
+        <li class="next"><a class="withripple" href="javascript:void(0)">Newer →</a></li>
+      </ul>
+      <div id="chart"></div>
+    </div>
+    <div class="col-md-4">
+      <div id="map" data-lng="{{lng}}" data-lat="{{lat}}"></div>
+      <a href="http://maps.google.com/?q={{lat}},{{lng}}">open in google maps</a>
+      <a href="https://www.google.com/maps/dir//{{lat}},{{lng}}/">calculate route from google maps</a>
+      <h4>Vote this spot</h4>
+      <select id="rating"
+        {{#unless user}}data-readonly="true"{{/unless}}
+        {{#if rating}}
+          data-mean="{{rating.mean}}"
+        {{/if}}
+      >
+        <option value=""></option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      {{#if rating}}
+        <p>vote is based on {{rating.votesNr}} vote/s</p>
+      {{else}}
+        <p>no votes yet</p>
+      {{/if}}
+      {{#if user}}
+      <a href="#" data-toggle="modal" data-target="#trainingTimeModal">add your training presence</a>
+      {{else}}
+      <span>Log in to add your trainig presence</span>
+      {{/if}}
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    disqus here
+  </div>
+</div>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  {{!-- Register modal start --}}
+  <div class="modal" role="dialog" id="trainingTimeModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Training time</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" id="trainingTime" method="post" action="/register">
+            <div class="alert alert-dismissible alert-danger hidden">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              <strong>There were errors processing the form</strong>
+            </div>
+            <fieldset>
+              I will be training here on
+              <div class="form-group label-floating">
+                <label class="control-label" for="datepicker">Date you will be train here</label>
+                <input type="text" id="datepicker" class="form-control">
+                <div id="container"></div>
+              </div>
+              at
+              <div class="form-group label-floating">
+                <label class="control-label" for="timepicker">time</label>
+                <input class="form-control" id="timepicker" type="text">
+              </div>
+              and i will train for approx
+              <div id="slider-connect"></div>
+              <p id="slider-value"></p>
+              <input type="hidden" id="slider-input" name="slider-input">
+              <button type="submit" class="btn btn-raised btn-block btn-primary">Add training time</button>
+            </fieldset>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{!-- Register modal end --}}
+
+
+{{#section 'scripts'}}
+  {{!-- Maps API --}}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjC3U-CbKYm_4sYV90XqJ_Upe8ID9jlxk&libraries=places"></script>
+  <script src="/build/js/spotDett.js"></script>
+{{/section}}
+
+{{#section 'css'}}
+  <link href="/build/css/spotDett.css" rel="stylesheet">
+{{/section}}
+

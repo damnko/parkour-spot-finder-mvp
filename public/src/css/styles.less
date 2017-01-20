@@ -1,0 +1,309 @@
+// VARIABLES
+@mainCol: #009688;
+@lightCol: #9E9E9E;
+@secCol: #966300;
+
+// GENERAL
+.navbar-wrap{
+  background-color: @mainCol;
+  .navbar{
+    margin-bottom: 0;
+  }
+}
+.video-wrap{
+  overflow: hidden;
+  position: relative;
+  video{
+    opacity: .15;
+    width: 100%;
+    position: absolute;
+  }
+}
+.modal-title{
+  color: #009688;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 25px;
+}
+.register-wrap{
+  padding: 10px;
+  background-color: #F6F9F3;
+  border-bottom: 2px solid #538C23;
+  color: #538C23;
+}
+
+// FOOTER
+.footer{
+  color: @lightCol;
+  padding-top: 50px;
+  h2{
+    color: @mainCol;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  h3{
+    text-transform: uppercase;
+  }
+  ul{
+    list-style: none;
+    padding-left: 0;
+  }
+}
+
+// HOME PAGE
+.hp-wrap{
+  .content{
+    text-align: center;
+    padding-top: 150px;
+    padding-bottom: 300px;
+    h1{
+      text-transform: uppercase;
+      font-weight: bold;
+      color: @mainCol;
+      margin-bottom: 0;
+    }
+    h2{
+      margin-top: 0;
+      @keyframes blink {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      span{
+        color: @secCol;
+      }
+      span::after{
+        content: '|';
+        animation: blink 500ms infinite;
+      }
+    }
+  }
+}
+
+// SPOTS
+#spot-search-bar{
+  background-color: #fff;
+  padding: 15px;
+  z-index: 99;
+  position: relative;
+  -webkit-box-shadow: 0 5px 20px 0 rgba(0,0,0,.05);
+  box-shadow: 0 5px 20px 0 rgba(0,0,0,.05);
+}
+#spotLocation{
+  .tt-input, .tt-hint{
+    font-size: 20px;
+    width: 100%;
+    border: none;
+    display: block;
+  }
+  .showFilters{
+    width: 20%;
+  }
+  .tt-hint{
+    color: #DADADA;
+  }
+  .twitter-typeahead{
+    /*display: block !important;*/
+    width: 75%;
+    margin: 0;
+  }
+  .tt-dropdown-menu{
+    background-color: #fff;
+    padding: 10px;
+    .tt-suggestion{
+      padding: 5px;
+    }
+    .tt-cursor{
+      background-color: @mainCol;
+      color: #fff;
+    }
+  }
+}
+
+/* FILTERS */
+.filters-wrap{
+  padding-top: 50px;
+  background-color: #F9F9F9;
+  h4{
+    color: @secCol;
+  }
+  .form-group{
+    margin: 0;
+  }
+  label.control-label{
+    margin-top: 0;
+  }
+  .br-wrapper{
+    display: inline-block;
+    margin: 0 10px;
+  }
+  .label{
+    font-size: 90%;
+  }
+  .label.label-info{
+    background-color: @mainCol;
+  }
+  .bootstrap-tagsinput{
+    width: 100%;
+  }
+  .tricks-wrap .form-group{
+    display: inline-block;
+  }
+  #tricksList{
+    list-style: none;
+    padding-left: 0;
+    li{
+      float: left;
+      margin-right: 10px;
+    }
+  }
+  #submit-filters{
+    background-color: @secCol;
+    &:hover{
+      background-color: #6B4700;
+    }
+  }
+}
+
+/* RESULT BAR */
+.spotsFound-wrap{
+  display: block;
+  padding-top: 50px;
+  position: relative;
+  .loading{
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .30);
+    img{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+    }
+  }
+  #spotsFound{
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 20px;
+    p{
+      padding: 7px;
+      border-bottom: 2px solid;
+    }
+    .some{
+      background-color: @mainCol;
+      border-color: #067167;
+    }
+    .none{
+      background-color: @secCol;
+      border-color: #6B4700;
+    }
+  }
+  #pagination{
+    text-align: center;
+  }
+}
+
+/* SPOTS */
+.spotDett{ 
+  img{
+    height: 245px;
+    cursor: zoom-in;
+  }
+  .info-wrap{
+    padding: 15px;
+    background-color: #fff;
+    margin-bottom: 30px;
+    border-bottom: 2px solid transparent;
+    a{
+      &:hover{
+        text-decoration: none;
+      }
+      h3{
+        margin: 0;
+        text-transform: uppercase;
+      }
+      .location{
+        color: #808080;
+      }
+      .tricks{
+        text-align: right;
+      }
+    }
+    &:hover{
+      border-color: @mainCol;
+    }
+  }
+}
+.spotDett.markerClicked{
+  .info-wrap{
+    border-color: @mainCol;
+  }
+}
+
+/* MAP */
+.mapInfowindow{
+  text-align: center;
+  h3{
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  img{
+    max-width: 200px;
+  }
+  p{
+    color: #909090;
+  }
+}
+
+.form-error{
+  display: inline;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+#mapwrap{
+  width: 100%;
+  height: 100%;
+  #map{
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    position: relative;
+  }
+}
+.overlay{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.8);
+  z-index: 99;
+  opacity: 0;
+  filter: alpha(opacity=0); /* internet explorer */
+  -khtml-opacity: 0;      /* khtml, old safari */
+  -moz-opacity: 0;       /* mozilla, netscape */
+  opacity: 0;           /* fx, safari, opera */
+  visibility: hidden;
+  -webkit-transition: opacity 0.5s, visibility 0s 0.5s;
+  transition: opacity 0.5s, visibility 0s 0.5s;
+}
+.overlay.show{
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+input.form-error{
+  border: 1px solid red;
+}
+// fix for glide slider to center image properly
+ul.glide__track{
+  padding-left: 0;
+}

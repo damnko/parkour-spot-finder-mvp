@@ -1,0 +1,257 @@
+<div id="spot-search-bar">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <form action="" id="spotLocation">
+          {{!-- Look for spots in <input type="text" id="location" placeholder="Type a place"><br/> --}}
+          <input type="text" id="suggestions" placeholder="Type a city or spot name...">
+          <a href="javascript:void(0)" class="btn btn-primary showFilters"><i class="fa fa-angle-down" aria-hidden="true"></i> Show filters</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="filters-wrap hidden">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h4><i class="fa fa-calendar" aria-hidden="true"></i> With people training on</h4>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="control-label" for="datepicker">Date</label>
+              <input class="form-control" id="datepicker" type="text">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label" for="timepicker-from">Time from</label>
+              <input class="form-control timepicker" id="timepicker-from" type="text">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label" for="timepicker-to">Time to</label>
+              <input class="form-control timepicker" id="timepicker-to" type="text">
+            </div>
+          </div>
+        </div>
+        <h4><i class="fa fa-star-o" aria-hidden="true"></i> Rating</h4>
+        At least
+        <select id="rating">
+          <option value=""></option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <a href="javascript:void(0)" class="hidden" id="remove-rating"><i class="fa fa-times"></i> Clear rating</a>
+      </div> {{!-- col-md-6 --}}
+      <div class="col-md-6 tricks-wrap">
+        <h4>
+          <i class="fa fa-list" aria-hidden="true"></i> With 
+          <select id="tricksLogic" class="form-control">
+            <option value="or">any of</option>
+            <option value="and">all of</option>
+          </select>
+          the following tricks
+        </h4>
+        <input type="text" id="tricks"><br/>
+        <ul id="tricksList">
+        </ul>
+      </div> {{!-- col-md-6 --}}
+      <div class="col-md-12">
+        <a id="submit-filters" href="javascript:void(0)" class="btn btn-block btn-raised btn-info">Filter spots</a>
+      </div> {{!-- col-md-12 --}}
+    </div>
+  </div>
+</div>
+<div class="spotsFound-wrap">
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="loading hidden">
+        <img src="/images/loading.gif" alt="">
+        </div>
+        <div id="spotsFound">
+          <p class="none hidden">
+            Sorry no spots found
+          </p>
+          <p class="some hidden">
+            <span></span> spots found
+          </p>
+        </div>
+        <div id="spots"></div>
+        <div id="pagination"></div>
+      </div> {{!-- col-md-6 --}}
+      <div class="col-md-6">
+        <div id="mapwrap">
+          <div id="map"></div>
+        </div>
+      </div> {{!-- col-md-6 --}}
+    </div> {{!-- row --}}
+</div>
+
+<script id="trickCheckbox-template" type="text/x-handlebars-template">
+  <li>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="\{{_id}}" value="\{{_id}}" data-name="\{{name}}"><span class="checkbox-material"><span class="check"></span></span> \{{name}}
+      </label>
+    </div>
+  </li>
+</script>
+
+<script id="pagination-template" type="text/x-handlebars-template">
+  <ul class="pagination">
+    \{{#if isNotFirst}}
+      <li><a href="javascript:void(0)" target="\{{isNotFirst}}">«</a></li>
+    \{{/if}}
+    \{{#each pages}}
+    <li \{{#if this.isActive}}class="active"\{{/if}}>
+      <a \{{#if this.target}}target="\{{this.target}}"\{{/if}} href="javascript:void(0)">\{{this.page}}</a>
+    </li>
+    \{{/each}}
+    \{{#if isNotLast}}
+      <li><a href="javascript:void(0)" target="\{{isNotLast}}">»</a></li>
+    \{{/if}}
+  </ul>
+</script>
+
+<script id="spot-template" type="text/x-handlebars-template">
+  <div class="spotDett" id="\{{_id}}">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="glide">
+
+            <div class="glide__arrows">
+                <button class="glide__arrow prev" data-glide-dir="<">prev</button>
+                <button class="glide__arrow next" data-glide-dir=">">next</button>
+            </div>
+
+            <div class="glide__wrapper">
+                <ul class="glide__track">
+                  \{{#each images}}
+                    <li class="glide__slide">
+                      <img data-size="\{{this.size}}" src="/images/uploads/thumb/\{{this.name}}" alt="">
+                    </li>
+                  \{{/each}}
+                </ul>
+            </div>
+
+            <div class="glide__bullets"></div>
+
+        </div> {{!-- glide --}}
+      </div> {{!-- col-md-12 --}}
+      <div class="col-md-12">
+        <div class="info-wrap">
+          <a href="/spot/\{{url}}">
+            <h3>\{{name}}</h3>
+            <div class="location">\{{formattedAddress}}</div>
+            {{!-- <div class="description">\{{description}}</div> --}}
+            <div class="tricks">
+              \{{#each tricks}}
+                <span class="label label-default">\{{this}}</span>
+              \{{/each}}
+            </div>
+          </a>
+        </div>
+      </div> {{!-- col-md-12 --}}
+    </div> {{!-- row --}}
+  </div>
+</script>
+
+<script id="mapInfowindow-template" type="text/x-handlebars-template">
+  <div class="mapInfowindow">
+    \{{#if img}}
+      <img src="/images/uploads/thumb/\{{img}}" alt="">
+    \{{/if}}
+    <h3>\{{name}}</h3>  
+    <p>\{{address}}</p>
+    <a href="\{{url}}">Spot details »</a>
+  </div>
+</script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{{#section 'scripts'}}
+  {{!-- Maps API --}}
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjC3U-CbKYm_4sYV90XqJ_Upe8ID9jlxk&libraries=places"></script>
+  {{!-- Devo includere il typeahead cosi perche' altrimenti non funziona se lo uso con l'import direttamente da JS, e' un problema legato a webpack e typeahead --}}
+  <script src="/src/vendor/typeahead.bundle.js"></script>
+  <script src="/build/js/spots.js"></script>
+{{/section}}
+
+{{#section 'css'}}
+  <link href="/build/css/spots.css" rel="stylesheet">
+{{/section}}
+
